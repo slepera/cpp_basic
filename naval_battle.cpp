@@ -10,7 +10,8 @@ int hit = 0;
 
 void print(unsigned short int field[DIM][DIM])
 {
-    cout<<"      A    B    C    D    E    F    G    H    I    L"<<endl;
+    
+    cout<<"      A    B    C    D    E    F    G    H    I    J"<<endl;
     for(int i = 0; i < DIM; i++)
     {
         cout<<i+1<<"   ";
@@ -56,10 +57,10 @@ void shoot(unsigned short int field[DIM][DIM])
     cin>>y;
     x = tolower(xs[0])-97;
     y = y-1;
-    cout<<x<<" "<<y<<" ";
-    if(field[x][y]==1)
+    cout<<x<<" "<<y<<endl;
+    if(field[y][x]==1)
     {
-        field[x][y]=2;
+        field[y][x]=2;
         hit++;
     }
     
