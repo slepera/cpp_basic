@@ -4,7 +4,8 @@ using namespace std;
 
 const int DIM = 10;
 const int NSHIPS = 5;
-int hit = 0;
+int your_hit = 0;
+int your_opponent_hit = 0;
 
 
 
@@ -35,43 +36,78 @@ void print(unsigned short int field[DIM][DIM])
     cout<<endl<<endl<<endl;
 }
 
-void generate_fields(unsigned short int field[DIM][DIM])
+void generate_field(unsigned short int field[DIM][DIM])
 {
     for(int i = 0; i < NSHIPS; i++)
     {
         int x = rand()%DIM;
         int y = rand()%DIM;
         field[x][y] = 1;
-        cout<<x<<" "<<y<<" ";
     }
-    cout<<endl;
 }
 
-void shoot(unsigned short int field[DIM][DIM])
+void generate_empty_field(unsigned short int field[DIM][DIM])
+{
+    for(int i = 0; i < DIM; i++)
+    {
+        for(int j = 0; j < DIM; j++)
+        {
+            field[i][j] = 0;
+        }      
+    }
+}
+
+void your_shoot(unsigned short int field[DIM][DIM])
 {
     string xs;
     int x, y;
-    cout<<"inserisci la coordinata x (A-Z):";
+    char hit;
+    cout<<"YOUR x (A-J):";
     cin>>xs;
-    cout<<"inserisci la coordinata y (1-10):";
+    cout<<"YOUR y (1-10):";
+    cin>>y;
+    cout<<"has been hit? (y/n):";
+    cin>>hit;
+    x = tolower(xs[0])-97;
+    y = y-1;
+
+    if(hit=='y')
+    {
+        field[y][x]=2;
+        your_hit++;
+    }  
+}
+
+void your_opponent_shoot(unsigned short int field[DIM][DIM])
+{
+    string xs;
+    int x, y;
+    cout<<"Opponent x (A-J):";
+    cin>>xs;
+    cout<<"Opponent y (1-10):";
     cin>>y;
     x = tolower(xs[0])-97;
     y = y-1;
-    cout<<x<<" "<<y<<endl;
     if(field[y][x]==1)
     {
         field[y][x]=2;
-        hit++;
-    }
-    
+        your_opponent_hit++;
+    }  
 }
+
 bool is_over()
 {
-    if(hit == NSHIPS)
+    if(your_hit == NSHIPS)
     {
+        cout<<"You Won!!!"<<endl;
         return true;
     }
-    else{
+    else if(your_opponent_hit == NSHIPS){
+        cout<<"You Lost!!!"<<endl;
+        return true;
+    }
+    else
+    {
         return false;
     }
 }
@@ -79,11 +115,24 @@ int main()
 {
     unsigned short int field_1[DIM][DIM];
     unsigned short int field_2[DIM][DIM];
-    generate_fields(field_1);
+    generate_field(field_1);
+    generate_empty_field(field_2);
     print(field_1);
-    do{
-        shoot(field_1);
+    print(field_2);
+    while(true){
+        your_shoot(field_2);
         print(field_1);
-    }while(!is_over());
-    cout<<"game over!";
+        print(field_2);
+        if(is_over())
+        {
+            break;
+        }
+        your_opponent_shoot(field_1);
+        print(field_1);
+        print(field_2);
+        if(is_over())
+        {
+            break;
+        }
+    }
 }
