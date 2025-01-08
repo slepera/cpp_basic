@@ -70,7 +70,6 @@ void server_creation()
 
 void client_connection()
 {
-    cout<<server_ip;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
         printf("socket creation failed...\n");

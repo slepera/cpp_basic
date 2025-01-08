@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string.h>
 using namespace std;
 
@@ -6,6 +7,32 @@ const int MAX_VOTI = 5;
 float voti[MAX_VOTI];
 char scelta;
 int numero_voti = 0;
+
+bool read_from_file()
+{
+    
+    ifstream f("input.txt");
+
+    // Check if the file is successfully opened
+    if (!f.is_open()) {
+        cerr << "Error opening the file!";
+        return -1;
+    }
+
+    // String variable to store the read data
+    string s;
+
+    // Read each line of the file and print it to the
+    // standard output stream till the whole file is
+  	// completely read
+    while (getline(f, s))
+        cout << s << endl;
+
+    // Close the file
+    f.close();
+    return 0;
+}
+
 
 
 void visualizza_voti()
