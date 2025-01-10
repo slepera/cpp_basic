@@ -4,33 +4,23 @@
 using namespace std;
 
 const int MAX_VOTI = 5;
+string materie[MAX_VOTI];
 float voti[MAX_VOTI];
 char scelta;
 int numero_voti = 0;
 
-bool read_from_file()
+
+
+float cerca_voto_per_materia(string mat)
 {
-    
-    ifstream f("input.txt");
-
-    // Check if the file is successfully opened
-    if (!f.is_open()) {
-        cerr << "Error opening the file!";
-        return -1;
+    for(int i = 0; i < numero_voti; i++)
+    {
+        if(materie[i]==mat)
+        {
+            return voti[i];
+        }
     }
-
-    // String variable to store the read data
-    string s;
-
-    // Read each line of the file and print it to the
-    // standard output stream till the whole file is
-  	// completely read
-    while (getline(f, s))
-        cout << s << endl;
-
-    // Close the file
-    f.close();
-    return 0;
+    return -1;
 }
 
 
@@ -43,11 +33,11 @@ void visualizza_voti()
     }
     for(int i = 0; i < numero_voti; i++)
     {
-        cout<<voti[i]<<endl;
+        cout<<"Materia: "<<materie[i]<<" voto: "<<voti[i]<<endl;
     }
 }
 
-void inserimento()
+void inserimento(string materia, float voto)
 {
     if(numero_voti==MAX_VOTI)
     {
@@ -55,8 +45,8 @@ void inserimento()
     }
     else
     {
-        cout<<"inserisci il nuovo voto:";
-        cin>>voti[numero_voti];
+        materie[numero_voti] = materia;
+        voti[numero_voti] = voto;
         numero_voti++;
     }
 }
@@ -72,26 +62,47 @@ float calcola_media()
     media = somma / numero_voti;
     return media;
 }
+
 int main()
 {
     do{
         cout<<"inserisci i per inserire un nuovo voto"<<endl;
         cout<<"inserisci v per visualizzare i voti"<<endl;
         cout<<"inserisci m per visualizzare la media dei voti"<<endl;
+        cout<<"inserisci c per ricerca voto per materia"<<endl;
         cout<<"inserisci t per terminare:";
         cin>>scelta;
-        if(scelta == 'i')
+        string mat;
+        float voto;
+        string materia;
+        switch(scelta)
         {
-            inserimento();
-        }
-        if(scelta=='v')
-        {
-            visualizza_voti();
-        }
-        if(scelta=='m')
-        {
-            float m = calcola_media();
-            cout<<"la tua media e':"<<m<<endl;
+            case 't':
+                return 0;
+            case 'i':
+                cout<<"inserisci la materia:";
+                cin>>mat;
+                cout<<"inserisci il voto:";
+                cin>>voto;
+                inserimento(mat, voto);
+                break;
+            case 'v':
+                visualizza_voti();
+                break;
+            case 'm':
+                float m = calcola_media();
+                cout<<"la tua media e':"<<m<<endl;
+                break;
+            case 'c':
+                cout<<"inserisci la materia:";
+                cin>>materia;
+                float voto = cerca_voto_per_materia(materia);
+                cout<<"il voto della materia "<<materia<<" e' "<<voto<<endl;
+                break;
+            default:
+                cout<<"non hai fatto una scelta valida!";
+                break;
+
         }
     }while(scelta!='t');
    

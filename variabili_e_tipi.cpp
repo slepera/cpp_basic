@@ -14,13 +14,39 @@ Il programma mostra come dichiarare variabili di diversi tipi (intero, float, ch
  */
 
 #include <iostream>  // Inclusione della libreria per l'input e l'output
-
+using namespace std;
 int main() {
+
+
+
+    char c = '9';
+    char d = '1';
+
+    char e = c + d;
+
+    cout<<e<<endl;
+
+
+    short int numero_alunni = 35;
+
+    float costo = 3.62;
+    double dimensione_atomo = 0.2112823183821812;
+
+
+
+
+
     // Dichiarazione e inizializzazione di variabili di diversi tipi
     int intero = 10;             // Variabile intera (int) inizializzata a 10
     double decimale = 3.14;      // Variabile in virgola mobile (double) inizializzata a 3.14
     char carattere = 'A';        // Variabile di tipo carattere (char) inizializzata a 'A'
     bool veroFalso = true;       // Variabile booleana (bool) inizializzata a true
+    
+    
+    
+    
+    
+    
     std::string messaggio = "C++ è divertente!";  // Variabile stringa (std::string) contenente un testo
 
     // Stampa il valore delle variabili sulla console
