@@ -7,20 +7,6 @@ int main() {
     double d = 123.456;
     char c = 'A';
 
-
-    //unsigned  byte [0-255]
-    //signed  byte [-127,128]
-
-    char cccaaa = 97;
-    cccaaa = cccaaa + 300;
-
-
-    printf("Sto stampando un char: %c\n",cccaaa);
-
-
-
-
-
     // ------------------------------
     // Esempio di Casting Implicito
     // ------------------------------
@@ -36,7 +22,7 @@ int main() {
     // Esempio di Casting Esplicito
     // ------------------------------
     // Qui il valore di un 'float' è convertito esplicitamente in un 'int'
-    int result_int = (int)f;  // Esplicitamente 'f' (float) diventa 'int'
+    int result_int = f;  // Esplicitamente 'f' (float) diventa 'int'
     char result_char = (char)i; // Esplicitamente 'i' (int) diventa 'char'
 
 

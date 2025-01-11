@@ -22,9 +22,9 @@ int main() {
     char c = '9';
     char d = '1';
 
-    char e = c + d;
+    int e = c + d;
 
-    cout<<e<<endl;
+    cout<<c + d<<endl;
 
 
     short int numero_alunni = 35;
