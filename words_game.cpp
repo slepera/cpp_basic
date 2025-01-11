@@ -1,7 +1,6 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <conio.h>
 #include <cstring>
 using namespace std;
 
