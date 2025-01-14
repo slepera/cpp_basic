@@ -1,9 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+
 using namespace std;
 
-const int MAX_VOTI = 5;
+const int MAX_VOTI = 10;
 string materie[MAX_VOTI];
 float voti[MAX_VOTI];
 char scelta;
@@ -89,32 +90,72 @@ float calcola_media()
     return media;
 }
 
+
+
+void carica_voti()
+{
+    ifstream file;
+    string str; 
+    file.open ("voti.txt", ifstream::in);
+    while (getline(file, str))
+    {
+        int indice_virgola = str.find(",");
+        int lunghezza_riga = str.length();
+        string materia = str.substr(0, indice_virgola);
+        string voto = str.substr(indice_virgola+1, lunghezza_riga);
+        materie[numero_voti]=materia;
+        voti[numero_voti]=stof(voto);
+        numero_voti++;
+    }
+    file.close();
+}
+
+void salva_voti()
+{
+    ofstream file;
+    file.open("voti.txt",ofstream::out);
+    for(int i = 0; i < numero_voti; i++)
+    {
+        string tmp = materie[i] + "," + to_string(voti[i]) + "\n";
+        file.write(tmp.data(), tmp.length());
+    }
+    file.close();
+}
+
 char menu_scelta()
 {
     char scelta;
     cout<<"inserisci i per nuovo voto:"<<endl;
-    cout<<"inserisci a per viaualizzarwe la media:"<<endl;
-    cout<<"inserisci m per visualizzare il minimo"<<endl;
-    cout<<"inserisci M per visualizzare il massimo"<<endl;
-    cout<<"inserisce s per stampare i voti"<<endl;
+    cout<<"inserisci a per viaualizzarwe la media dei voti:"<<endl;
+    cout<<"inserisci m per visualizzare il voto minimo"<<endl;
+    cout<<"inserisci M per visualizzare il voto massimo"<<endl;
+    cout<<"inserisce v per visualizzare tutti i voti"<<endl;
     cout<<"inserisci c per ricerca voto per materia"<<endl;
+    cout<<"inserisci s per salvatre i voti su file"<<endl;
     cout<<"inserisci t per terminare:";
     cin>>scelta;
     return scelta;
 }
 
-
 int main()
 {
+
+    carica_voti();
+
     do{
         scelta = menu_scelta();
         string mat;
         float voto;
         string materia;
+        float m;
         switch(scelta)
         {
             case 't':
                 return 0;
+            case 's':
+                cout<<"Salvataggio su file..."<<endl;
+                salva_voti();
+                break;
             case 'i':
                 cout<<"inserisci la materia:";
                 cin>>mat;
@@ -122,25 +163,25 @@ int main()
                 cin>>voto;
                 inserimento(mat, voto);
                 break;
-            case 's':
+            case 'v':
                 visualizza_voti();
                 break;
             case 'a':
-                float m = calcola_media();
+                m = calcola_media();
                 cout<<"la tua media e':"<<m<<endl;
                 break;
             case 'm':
-                float m = minimo();
+                m = minimo();
                 cout<<"il voto minimo e':"<<m<<endl;
                 break;
             case 'M':
-                float m = massimo();
+                m = massimo();
                 cout<<"il voto massimo e':"<<m<<endl;
                 break;
             case 'c':
                 cout<<"inserisci la materia:";
                 cin>>materia;
-                float voto = cerca_voto_per_materia(materia);
+                voto = cerca_voto_per_materia(materia);
                 cout<<"il voto della materia "<<materia<<" e' "<<voto<<endl;
                 break;
             default:

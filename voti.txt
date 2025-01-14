@@ -1,0 +1,6 @@
+informatica,9.000000
+matematica,8.000000
+inglese,7.000000
+ginnstica,10.000000
+elettronica,9.500000
+fisica,7.500000
