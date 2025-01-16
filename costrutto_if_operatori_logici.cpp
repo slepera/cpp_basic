@@ -26,7 +26,7 @@ if (eta >= 18 && saldoConto >= 1000 && isAbbonamentoAttivo): Verifica tutte e tr
 
 int main() {
     // Dichiarazione di variabili
-    int eta = 25;               // Età dell'utente
+    int eta = 18;               // Età dell'utente
     double saldoConto = 1500.50; // Saldo bancario dell'utente
     bool isAbbonamentoAttivo = true; // Stato dell'abbonamento
 
