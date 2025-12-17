@@ -8,8 +8,8 @@ int main() {
     srand(time(NULL));
     int numero_previsto;
     int numero_uscito;
-     int tentativi=2;
-    while (tentativi>0) {
+    int tentativi=0;
+    while (tentativi<2) {
          cout<<"hai ancora "<<tentativi<<" tentativi"<<endl;
          cout<<"prova ad indovinare (0 per testa, 1 per croce): ";
          cin>>numero_previsto;
@@ -23,8 +23,8 @@ int main() {
               cout<<"Complimenti hai indovinato!!!"<<endl;
               return 0;
          }
-         tentativi=tentativi -1;
-         if (tentativi>0){
+         tentativi=tentativi + 1;
+         if (tentativi<2){
               cout<<"Ritenta NON hai indovinato!!!"<<endl;
          }
          else {
