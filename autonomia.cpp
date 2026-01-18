@@ -18,6 +18,6 @@ int main () {
     if (distanza>=autonomia) {
         cout<<"fare rifornimento";
     }else {
-        cout<<"hai carburante sufficiente per il affrontare il viaggio"}
+        cout<<"hai carburante sufficiente per affrontare il viaggio";
     }
 }
