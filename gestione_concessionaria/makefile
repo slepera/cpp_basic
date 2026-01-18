@@ -7,7 +7,7 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 OBJS = $(SRCS:.c=.o)
 OBJS2 = $(wildcard $(OBJ_DIR)/*.o)
 
-MAIN = Main
+MAIN = gestione_concessionaria.exe
 all: $(MAIN)
 
 $(MAIN): $(OBJS) $(OBJS2)
