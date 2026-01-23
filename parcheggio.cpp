@@ -1,10 +1,13 @@
 #include <iostream>
 using namespace std;
 
+
+
 int totale_veicoli;
 float totale_incasso;
 
 float costo_singola_sosta(int ore, char tipo_veicolo) {
+
     const float TARIFFA_M=5.0;
     const float TARIFFA_A=10.0;
     const float TARIFFA_F=15.0;
@@ -40,7 +43,7 @@ char menu() {
     }while (scelta.length()!=1&&scelta!="i"&&scelta!="I"
             &&scelta!="s"&&scelta!="S"
             &&scelta!="x"&&scelta!="X");
-    return scelta[0];
+    return tolower(scelta[0]);
 }
 
 void inserimento() {
@@ -71,15 +74,12 @@ int main () {
         char scelta = menu();
         switch (scelta) {
             case 'i':
-            case 'I':
                 inserimento();
                 break;
             case 's':
-            case 'S':
                 sommario();
                 break;
             case 'x':
-            case 'X':
                 return 0;
         }
     }
