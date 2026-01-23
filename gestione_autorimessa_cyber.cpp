@@ -1,18 +1,18 @@
 #include <iostream>
 using namespace std;
 
-
 float incasso_totale = 0;
 int numero_veicoli = 0;
 
+
 char menu_iniziale();
 void inserimento_veicolo();
-float costo_sosta(char veicolo_elettrico, int durata_sosta, char tipo_veicolo);
+float costo_sosta(char, int, char);
 void stampa_report();
 
 int main() {
     char scelta;
-    while (true) {
+    do {
         scelta = menu_iniziale();
         switch (scelta) {
             case 'i':
@@ -21,10 +21,8 @@ int main() {
             case 'r':
                 stampa_report();
                 break;
-            case 'x':
-                return 0;
         }
-    }
+    }while (scelta != 'x');
 }
 
 
