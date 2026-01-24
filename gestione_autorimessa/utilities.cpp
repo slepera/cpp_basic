@@ -3,7 +3,16 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
+#include <limits>
 using namespace std;
+
+void press_enter_to_continue() {
+    std::cout << "Press Enter to continue...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
+}
+
 
 int ore_trascorse(string ora_ingresso, string ora_uscita) {
         int h1 = stoi(ora_ingresso.substr(0, 2));

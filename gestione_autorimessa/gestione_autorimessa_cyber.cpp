@@ -3,30 +3,33 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include <cstdlib>
 #include "utilities.h"
+
 using namespace std;
 
-float incasso_totale = 0;
-int numero_veicoli = 0;
+
+int numero_veicoli_entrati = 0;
+int numero_veicoli_usciti = 0;
 
 const int DIM_MAX = 100;
 
 int ultima_posizione = 0;
 
-string veicoli[4][DIM_MAX];
+string veicoli[5][DIM_MAX];
 
 char menu_iniziale();
 void check_in();
-float check_out();
+void check_out();
 float costo_sosta(int, char);
 void stampa_report();
 
 
-float check_out() {
+void check_out() {
     string targa;
     string ora_uscita;
     string ora_ingresso;
-
+    float costo;
     int numero_ore;
     cout<<"inserisci la targa: ";
     cin>>targa;
@@ -36,10 +39,11 @@ float check_out() {
             ora_ingresso = veicoli[2][i];
             veicoli[3][i] = ora_uscita;
             numero_ore = ore_trascorse(ora_ingresso, ora_uscita);
-            return costo_sosta(numero_ore, veicoli[1][i][0]);
+            costo = costo_sosta(numero_ore, veicoli[1][i][0]);
+            veicoli[4][i] = to_string(costo);
+            numero_veicoli_usciti++;
         }
     }
-    return -1;
 }
 
 
@@ -62,6 +66,11 @@ int main() {
 }
 
 void check_in() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
     char tipo_veicolo;
     string targa;
     do {
@@ -76,23 +85,42 @@ void check_in() {
     veicoli[0][ultima_posizione]  = targa;
     veicoli[2][ultima_posizione] = current_time_hh_mm();
     ultima_posizione++;
-    numero_veicoli++;
+    numero_veicoli_entrati++;
 }
 
 
 void stampa_report() {
+    float incasso_totale = 0;
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 
     for (int i = 0; i < ultima_posizione; i++) {
-        cout<<"TARGA: "<<veicoli[0][i]<<" Ora ingresso: "<<veicoli[2][i]<<" Ora uscita: "<<veicoli[3][i];
+        if (veicoli[4][i]!="") {
+            incasso_totale += stof(veicoli[4][i]);
+        }
+
+        cout<<"TARGA: "<<veicoli[0][i]<<" Ora ingresso: "<<veicoli[2][i]<<" Ora uscita: "<<veicoli[3][i]<<" costo: "<<veicoli[4][i];
         cout<<endl;
     }
-    cout<<"il numero totale di veicoli e': "<<numero_veicoli<<endl;
+    cout<<"il numero totale di veicoli entrati e': "<<numero_veicoli_entrati<<endl;
+    cout<<"il numero totale di veicoli usciti e': "<<numero_veicoli_usciti<<endl;
+    cout<<"il numero totale di veicoli in garage e': "<<numero_veicoli_entrati-numero_veicoli_usciti<<endl;
     cout<<"l'incasso totale e' "<< incasso_totale << " euro"<<endl;
+
+    press_enter_to_continue();
 
 }
 
 
 char menu_iniziale() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
     string scelta;
     do {
         cout<<"Cosa vuoi fare?"<<endl;
