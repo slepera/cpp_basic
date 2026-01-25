@@ -3,7 +3,8 @@ using namespace std;
 int main () {
     char c1, c2, c3;
     int p1, p2, p3;
-    char scambio;
+    char scambio_c;
+    int scambio_p;
     cout<<"inserisci tre lettere maiuscole o minuscole "<<endl;
     cin>>c1>>c2>>c3;
     if (c1>='a' and c1<='z') {
@@ -25,19 +26,29 @@ int main () {
         p3=c3-'A'+1;
     }
     if (p1>p2) {
-        scambio=c1;
+        scambio_c=c1;
         c1=c2;
-        c2=scambio;
+        c2=scambio_c;
+        scambio_p=p1;
+        p1=p2;
+        p2=scambio_p;
+
     }
     if (p1>p3) {
-        scambio=c1;
+        scambio_c=c1;
         c1=c3;
-        c3=scambio;
+        c3=scambio_c;
+        scambio_p=p1;
+        p1=p3;
+        p3=scambio_p;
     }
     if (p2>p3) {
-        scambio=c2;
+        scambio_c=c2;
         c2=c3;
-        c3=scambio;
+        c3=scambio_c;
+        scambio_p=p2;
+        p2=p3;
+        p3=scambio_p;
     }
     cout<<c1<<c2<<c3;
     return 0;
