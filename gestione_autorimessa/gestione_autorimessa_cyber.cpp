@@ -5,25 +5,26 @@
 #include <sstream>
 #include <cstdlib>
 #include "utilities.h"
-
+#include "constants.h"
+#include "json_manager.h"
 using namespace std;
 
 
 int numero_veicoli_entrati = 0;
 int numero_veicoli_usciti = 0;
 
-const int DIM_MAX = 100;
+
 
 int ultima_posizione = 0;
 
-string veicoli[5][DIM_MAX];
+string veicoli[DIM_MAX][COLUMS];
 
 char menu_iniziale();
 void check_in();
 void check_out();
 float costo_sosta(int, char);
 void stampa_report();
-
+void salva();
 
 void check_out() {
     string targa;
@@ -52,6 +53,8 @@ int main() {
     do {
         scelta = menu_iniziale();
         switch (scelta) {
+            case 's':
+                salva();
             case 'i':
                 check_in();
                 break;
@@ -114,6 +117,11 @@ void stampa_report() {
 
 }
 
+void salva() {
+    cout<<genera_json(veicoli, ultima_posizione);
+    press_enter_to_continue();
+}
+
 
 char menu_iniziale() {
     #ifdef _WIN32
@@ -124,12 +132,13 @@ char menu_iniziale() {
     string scelta;
     do {
         cout<<"Cosa vuoi fare?"<<endl;
+        cout<<"s per salvare"<<endl;
         cout<<"i per check-in"<<endl;
         cout<<"o per check-out"<<endl;
         cout<<"r per stampare il report degli incassi"<<endl;
         cout<<"x per terminare il programma"<<endl;
         cin>>scelta;
-    }while (scelta != "i" && scelta != "o" && scelta != "r" && scelta!= "x");
+    }while (scelta != "s" && scelta != "i" && scelta != "o" && scelta != "r" && scelta!= "x");
     return scelta[0];
 }
 

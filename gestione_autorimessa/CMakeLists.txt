@@ -7,4 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(gestione_autorimessa
         gestione_autorimessa_cyber.cpp
         utilities.cpp
+        json_manager.cpp
+        json.hpp
 )
