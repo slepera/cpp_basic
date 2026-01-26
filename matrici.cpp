@@ -1,36 +1,49 @@
 #include <iostream>
 using namespace std;
 
-void inserisci_voto(string materie[10], float voti[10][10], string materia, float voto)
+const int N_MATERIE = 4;
+const int N_MAX_VOTI = 10;
+
+string materie[]={"ita","mat","ing","inf"};
+float voti[N_MATERIE][N_MAX_VOTI]={-1};
+
+
+int trova_prima_colonna_libera(int i) {
+    for (int j = 0; j < N_MAX_VOTI; j++) {
+        if (voti[i][j]==-1) {
+            return j;
+        }
+    }
+}
+
+void inserisci_voto(string materia, float voto)
 {
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < N_MATERIE; i++)
     {
-        if((materie[i]=="materia")||(materie[i]==""))   
-        {
-            inserisci_voto(voti, voto);
-            break;
+        if((materie[i]==materia)) {
+            int indice_colonna = trova_prima_colonna_libera(i);
+            voti[i][indice_colonna] = voto;
         }
     }
 }
 
 int main()
 {
-    string materie[10]={};
-    float voti[10][10]={};
+
     float media_inf, media_tot;
 
-    inserisci_voto(materie, voti, "info","7");
-    inserisci_voto(materie, voti, "info","9");
+    inserisci_voto("info","7");
+    inserisci_voto("info","9");
 
-    media_inf = calcola_media_materia(materie, voti, "info");
+    media_inf = calcola_media_materia("info");
     cout<<"la media in informatica è: "<<media_inf<<endl;
-    inserisci_voto(materie, voti, "info","10");
+    inserisci_voto("info","10");
 
-    media_inf = calcola_media_materia(materie, voti, "info");
+    media_inf = calcola_media_materia("info");
     cout<<"la media in informatica è: "<<media_inf<<endl;
     
-    inserisci_voto(materie, voti, "mat","10");
-    media_tot = calcola_media_tot(materie, voti);
+    inserisci_voto("mat","10");
+    media_tot = calcola_media_tot();
 
 
 
