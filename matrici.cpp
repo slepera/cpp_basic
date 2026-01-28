@@ -34,6 +34,20 @@ int trova_materia(string materia) {
     return -1;
 }
 
+float calcola_media(string materia) {
+    float voto, somma, media;
+    int indice_materia = trova_materia(materia);
+    int indice_ultimo_voto = trova_prima_colonna_libera(indice_materia);
+    for (int j = 0; j < indice_ultimo_voto; j++) {
+        voto = voti[indice_materia][j];
+        somma = somma + voto;
+    }
+    media = somma / indice_ultimo_voto;
+
+    return media;
+
+}
+
 
 bool cancella_voto(string materia, int posizione) {
     int indice_riga = trova_materia(materia);
@@ -74,9 +88,6 @@ void inserisci_voto(string materia, float voto)
 
 int main()
 {
-
-
-
     float media_inf, media_tot;
     init_voti();
     inserisci_voto("inf",1);
@@ -85,14 +96,16 @@ int main()
     inserisci_voto("inf",4);
     inserisci_voto("inf",5);
 
+
+
     stampa("inf");
 
     bool cancella = cancella_voto("inf", 2);
 
     stampa("inf");
 
-    //media_inf = calcola_media_materia("inf");
-    //cout<<"la media in informatica è: "<<media_inf<<endl;
+    media_inf = calcola_media("inf");
+    cout<<"la media in informatica e': "<<media_inf<<endl;
     inserisci_voto("info",10);
 
     //media_inf = calcola_media_materia("inf");
