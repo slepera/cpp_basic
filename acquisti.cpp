@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 int main() {
+    //commento di prova
+
     float prezzo;
     int quantita;
     float calcolo_parziale;
