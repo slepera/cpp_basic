@@ -37,12 +37,17 @@ int trova_materia(string materia) {
 float calcola_media(string materia) {
     float voto, somma, media;
     int indice_materia = trova_materia(materia);
-    int indice_ultimo_voto = trova_prima_colonna_libera(indice_materia);
-    for (int j = 0; j < indice_ultimo_voto; j++) {
+
+    int indice_ultimo_voto = trova_prima_colonna_libera(indice_materia-1);
+    if (indice_ultimo_voto==0) {
+        return -1;
+    }
+    for (int j = 0; j <= indice_ultimo_voto; j++) {
         voto = voti[indice_materia][j];
         somma = somma + voto;
     }
-    media = somma / indice_ultimo_voto;
+
+    media = somma / indice_ultimo_voto+1;
 
     return media;
 
