@@ -1,19 +1,24 @@
 
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 int main(){
-    const int NUMBERS_TO_SUM = 3;
-    long long
-    int sum = 0;
-    int input_number;
+  int dado, n_scelto, n_tentativi=0;
+  do {
+    cout<<"scegli un numero:   ";
+    cin>>n_scelto;
 
-    cout<<sizeof(sum)<<endl;
-
-    for (int i = 0;i<NUMBERS_TO_SUM;i = i + 1) {
-        cout<<"Inserisci un numero: ";
-        cin>>input_number;
-        sum = sum + input_number;
+    srand(time(NULL));
+    dado=rand()%6+1;
+    cout<<"e' uscito il numero: "<<dado<<endl;
+    if (n_scelto==dado) {
+      cout<<"hai vinto!"<<endl;
+    }else {
+      cout<<"hai perso"<<endl;
     }
-    cout<<"la somma e': "<<sum;
+    n_tentativi++;
+  }while (n_scelto!=dado);
+  cout<<"hai effettuato "<<n_tentativi<<" tentativi in tot"<<endl;
+  return 0;
 }
