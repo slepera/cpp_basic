@@ -37,9 +37,8 @@ int trova_materia(string materia) {
 float calcola_media(string materia) {
     float voto, somma, media;
     int indice_materia = trova_materia(materia);
-
-    int indice_ultimo_voto = trova_prima_colonna_libera(indice_materia-1);
-    if (indice_ultimo_voto==0) {
+    int indice_ultimo_voto = trova_prima_colonna_libera(indice_materia)-1;
+    if (indice_ultimo_voto==-1) {
         return -1;
     }
     for (int j = 0; j <= indice_ultimo_voto; j++) {
@@ -54,14 +53,14 @@ float calcola_media(string materia) {
 }
 
 
-bool cancella_voto(string materia, int posizione) {
+bool cancella_voto(string materia, int indice) {
     int indice_riga = trova_materia(materia);
     if (indice_riga==-1) {
         cout<<"non e' possibile eliminare il voto: "<<materia<<" non trovata!!!"<<endl;
         return false;
     }
     int i;
-    for (i = posizione+1; voti[indice_riga][i]!=-1; i++) {
+    for (i = indice+1; voti[indice_riga][i]!=-1; i++) {
         voti[indice_riga][i-1] = voti[indice_riga][i];
     }
     voti[indice_riga][i-1] = -1;
@@ -69,13 +68,14 @@ bool cancella_voto(string materia, int posizione) {
 }
 
 void stampa(string materia) {
-    for (int i  = 0; i < N_MATERIE; i++) {
-        if (materie[i] == materia) {
-            cout<<"I voti della materia "<<materia<<" sono: "<<endl;
-            for (int j = 0; j < N_MAX_VOTI and voti[i][j]!=-1; j++) {
-                cout<<voti[i][j]<<"    ";
-            }
-        }
+    int indice_materia = trova_materia(materia);
+    if (indice_materia==-1) {
+        cout<<"materia non trovata!"<<endl;
+        return;
+    }
+    cout<<"I voti della materia "<<materia<<" sono: "<<endl;
+    for (int j = 0; j < N_MAX_VOTI and voti[indice_materia][j]!=-1; j++) {
+        cout<<voti[indice_materia][j]<<"    ";
     }
 }
 
@@ -91,34 +91,78 @@ void inserisci_voto(string materia, float voto)
     }
 }
 
+void menu_inserisci_voto() {
+    string materia;
+    float voto;
+    cout<<"Inserisci la materia: ";
+    cin>>materia;
+    cout<<"Inserisci il voto: ";
+    cin>>voto;
+    inserisci_voto(materia,voto);
+}
+
+void menu_elimina_voto() {
+    string materia;
+    int posizione;
+    cout<<"Inserisci la materia: ";
+    cin>>materia;
+    cout<<"Inserisci la posizione del voto da eliminare: ";
+    cin>>posizione;
+    cancella_voto(materia,posizione-1);
+}
+
+void menu_media_materia() {
+    string materia;
+    float media;
+    cout<<"Inserisci la materia: ";
+    cin>>materia;
+    media = calcola_media(materia);
+    cout<<"La media per la materia "<<materia<<" e' "<<media<<endl;
+}
+
+float calcola_media_globale() {
+    float media_globale;
+    int n_materie;
+    for (int i = 0; i < N_MATERIE; i++) {
+        float media_materia = calcola_media(materie[i]);
+        if (media_materia!=-1) {
+            media_globale += media_materia;
+            n_materie++;
+        }
+    }
+    return media_globale / n_materie;
+}
+
+void menu_media_totale() {
+    float media_globale = calcola_media_globale();
+    cout<<"La media globale e' "<<media_globale<<endl;
+}
+
 int main()
 {
-    float media_inf, media_tot;
-    init_voti();
-    inserisci_voto("inf",1);
-    inserisci_voto("inf",2);
-    inserisci_voto("inf",3);
-    inserisci_voto("inf",4);
-    inserisci_voto("inf",5);
-
-
-
-    stampa("inf");
-
-    bool cancella = cancella_voto("inf", 2);
-
-    stampa("inf");
-
-    media_inf = calcola_media("inf");
-    cout<<"la media in informatica e': "<<media_inf<<endl;
-    inserisci_voto("info",10);
-
-    //media_inf = calcola_media_materia("inf");
-    //cout<<"la media in informatica è: "<<media_inf<<endl;
-    
-    inserisci_voto("mat",10);
-    //media_tot = calcola_media_tot();
-
-
+    char scelta;
+    do {
+        cout<<"scegli l'operazione da effettuare:"<<endl;
+        cout<<"i per inserire un voto."<<endl;
+        cout<<"e per eliminare un voto."<<endl;
+        cout<<"m per calcolare la media/materia"<<endl;
+        cout<<"M per calcolare la media totale"<<endl;
+        cout<<"x per uscire"<<endl;
+        cin>>scelta;
+        switch (scelta) {
+            case 'i':
+                menu_inserisci_voto();
+                break;
+            case 'e':
+                menu_elimina_voto();
+                break;
+            case 'm':
+                menu_media_materia();
+                break;
+            case 'M':
+                menu_media_totale();
+                break;
+        }
+    }while (scelta !='x');
 
 }

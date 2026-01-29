@@ -1,12 +1,31 @@
 #include <iostream>
 using namespace std;
 
+bool pari(int n) {
+    if (n % 2 == 0) {
+        return true;
+    }else {
+        return false;
+    }
+}
 
 int main() {
+    int numero_inserimenti;
+    int numero;
+    int n_pari = 0, n_dispari = 0;
+    cout<<"quanti numeri vuoi inserire";
+    cin>>numero_inserimenti;
 
-    //int i1 = 10, i2 = 5, i3;
-    float f1 = 1.5, f2 = 2.5, f3;
-    //i3 = i1/i2;
-    f3 = f1/f2;
-    return 0;
+    for (int i = 0; i < numero_inserimenti; i++) {
+        cout<<"inserisci un numero: ";
+        cin>>numero;
+        if (pari(numero)){
+            n_pari++;
+        }else {
+            n_dispari++;
+        }
+    }
+
+    cout<<"hai inserito "<<n_pari<<" numeri pari"<<endl;
+    cout<<"hai inserito "<<n_dispari<<" numeri dispari";
 }
