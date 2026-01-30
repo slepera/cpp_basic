@@ -1,0 +1,9 @@
+//
+// Created by Salvatore on 25/01/2026.
+//
+
+#ifndef GESTIONE_AUTORIMESSA_CONSTANTS_H
+#define GESTIONE_AUTORIMESSA_CONSTANTS_H
+const int DIM_MAX = 100;
+const int COLUMS = 5;
+#endif //GESTIONE_AUTORIMESSA_CONSTANTS_H
