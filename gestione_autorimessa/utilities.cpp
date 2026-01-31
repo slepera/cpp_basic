@@ -23,7 +23,7 @@ int ore_trascorse(string ora_ingresso, string ora_uscita) {
         int minutes1 = h1 * 60 + m1;
         int minutes2 = h2 * 60 + m2;
 
-        return (minutes2 - minutes1) / 60;
+        return ((minutes2 - minutes1) / 60)+1;
 }
 string current_time_hh_mm() {
     std::time_t t = std::time(nullptr);

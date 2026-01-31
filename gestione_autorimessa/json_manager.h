@@ -1,8 +1,8 @@
-//
-// Created by Salvatore on 25/01/2026.
-//
+#include "veicolo.h"
 
 #ifndef GESTIONE_AUTORIMESSA_JSON_MANAGER_H
 #define GESTIONE_AUTORIMESSA_JSON_MANAGER_H
-string genera_json(string veicoli[DIM_MAX][COLUMS], int n_veicoli);
+void genera_json(veicolo[], int);
+void genera_csv(veicolo[], int);
+void scrivi_file(string, string);
 #endif //GESTIONE_AUTORIMESSA_JSON_MANAGER_H

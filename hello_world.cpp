@@ -3,13 +3,23 @@ using namespace std;
 
 
 int main() {
-    char c = 0, cp;
 
-    do {
-        cp = c;
-        cout<<"inserisci un carattere:";
-        cin>>c;
-    }while (c != cp + 1);
+
+
+
+
+
+
+
+
+
+    // char c = 0, cp;
+    //
+    // do {
+    //     cp = c;
+    //     cout<<"inserisci un carattere:";
+    //     cin>>c;
+    // }while (c != cp + 1);
 
 
 

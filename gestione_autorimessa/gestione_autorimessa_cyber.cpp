@@ -7,6 +7,7 @@
 #include "utilities.h"
 #include "constants.h"
 #include "json_manager.h"
+#include "veicolo.h"
 using namespace std;
 
 
@@ -17,7 +18,7 @@ int numero_veicoli_usciti = 0;
 
 int ultima_posizione = 0;
 
-string veicoli[DIM_MAX][COLUMS];
+veicolo veicoli[DIM_MAX];
 
 char menu_iniziale();
 void check_in();
@@ -36,12 +37,12 @@ void check_out() {
     cin>>targa;
     ora_uscita = current_time_hh_mm();
     for (int i = 0; i < ultima_posizione; i++) {
-        if (veicoli[0][i] == targa) {
-            ora_ingresso = veicoli[2][i];
-            veicoli[3][i] = ora_uscita;
+        if (veicoli[i].targa == targa) {
+            ora_ingresso = veicoli[i].ora_ingresso;
+            veicoli[i].ora_uscita = ora_uscita;
             numero_ore = ore_trascorse(ora_ingresso, ora_uscita);
-            costo = costo_sosta(numero_ore, veicoli[1][i][0]);
-            veicoli[4][i] = to_string(costo);
+            costo = costo_sosta(numero_ore, veicoli[i].tipo);
+            veicoli[i].costo = costo;
             numero_veicoli_usciti++;
         }
     }
@@ -85,8 +86,9 @@ void check_in() {
         cin>>targa;
     }while (targa.size()<1);
 
-    veicoli[0][ultima_posizione]  = targa;
-    veicoli[2][ultima_posizione] = current_time_hh_mm();
+    veicoli[ultima_posizione].targa = targa;
+    veicoli[ultima_posizione].tipo = tipo_veicolo;
+    veicoli[ultima_posizione].ora_ingresso = current_time_hh_mm();
     ultima_posizione++;
     numero_veicoli_entrati++;
 }
@@ -101,13 +103,13 @@ void stampa_report() {
     #endif
 
     for (int i = 0; i < ultima_posizione; i++) {
-        if (veicoli[4][i]!="") {
-            incasso_totale += stof(veicoli[4][i]);
+        if (veicoli[i].costo!=0) {
+            incasso_totale += veicoli[i].costo;
         }
-
-        cout<<"TARGA: "<<veicoli[0][i]<<" Ora ingresso: "<<veicoli[2][i]<<" Ora uscita: "<<veicoli[3][i]<<" costo: "<<veicoli[4][i];
+        cout<<"TARGA: "<<veicoli[i].targa<<" Tipo: "<<veicoli[i].tipo<<" Ora ingresso: "<<veicoli[i].ora_ingresso<<" Ora uscita: "<<veicoli[i].ora_uscita<<" costo: "<<veicoli[i].costo;
         cout<<endl;
     }
+
     cout<<"il numero totale di veicoli entrati e': "<<numero_veicoli_entrati<<endl;
     cout<<"il numero totale di veicoli usciti e': "<<numero_veicoli_usciti<<endl;
     cout<<"il numero totale di veicoli in garage e': "<<numero_veicoli_entrati-numero_veicoli_usciti<<endl;
@@ -118,7 +120,8 @@ void stampa_report() {
 }
 
 void salva() {
-    cout<<genera_json(veicoli, ultima_posizione);
+    genera_json(veicoli, ultima_posizione);
+    genera_csv(veicoli, ultima_posizione);
     press_enter_to_continue();
 }
 
