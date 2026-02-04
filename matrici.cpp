@@ -5,21 +5,25 @@ using namespace std;
 const int N_MATERIE = 4;
 const int N_MAX_VOTI = 10;
 
-string materie[]={"ita","mat","ing","inf"};
-float voti[N_MATERIE][N_MAX_VOTI];
+struct votazione {
+    string materia;
+    float punteggi[N_MAX_VOTI];
+};
 
-void init_voti() {
-    //memset(voti, -1, sizeof(voti));
+votazione voti[N_MATERIE];
+
+void init_voti(string materie[N_MATERIE]) {
     for (int i = 0; i < N_MATERIE; i++) {
+        voti[i].materia = materie[i];
         for (int j = 0; j < N_MAX_VOTI; j++) {
-            voti[i][j] = -1;
+            voti[i].punteggi[j] = -1;
         }
     }
 }
 
 int trova_prima_colonna_libera(int i) {
     for (int j = 0; j < N_MAX_VOTI; j++) {
-        if (voti[i][j]==-1) {
+        if (voti[i].punteggi[j]==-1) {
             return j;
         }
     }
@@ -27,7 +31,7 @@ int trova_prima_colonna_libera(int i) {
 
 int trova_materia(string materia) {
     for (int i = 0; i < N_MATERIE; i++) {
-        if (materie[i]== materia) {
+        if (voti[i].materia == materia) {
             return i;
         }
     }
@@ -42,11 +46,11 @@ float calcola_media(string materia) {
         return -1;
     }
     for (int j = 0; j <= indice_ultimo_voto; j++) {
-        voto = voti[indice_materia][j];
+        voto = voti[indice_materia].punteggi[j];
         somma = somma + voto;
     }
 
-    media = somma / indice_ultimo_voto+1;
+    media = somma / (indice_ultimo_voto+1);
 
     return media;
 
@@ -60,10 +64,10 @@ bool cancella_voto(string materia, int indice) {
         return false;
     }
     int i;
-    for (i = indice+1; voti[indice_riga][i]!=-1; i++) {
-        voti[indice_riga][i-1] = voti[indice_riga][i];
+    for (i = indice+1; voti[indice_riga].punteggi[i]!=-1; i++) {
+        voti[indice_riga].punteggi[i-1] = voti[indice_riga].punteggi[i];
     }
-    voti[indice_riga][i-1] = -1;
+    voti[indice_riga].punteggi[i-1] = -1;
     return true;
 }
 
@@ -74,8 +78,8 @@ void stampa(string materia) {
         return;
     }
     cout<<"I voti della materia "<<materia<<" sono: "<<endl;
-    for (int j = 0; j < N_MAX_VOTI and voti[indice_materia][j]!=-1; j++) {
-        cout<<voti[indice_materia][j]<<"    ";
+    for (int j = 0; j < N_MAX_VOTI and voti[indice_materia].punteggi[j]!=-1; j++) {
+        cout<<voti[indice_materia].punteggi[j]<<"    ";
     }
 }
 
@@ -84,9 +88,9 @@ void inserisci_voto(string materia, float voto)
 {
     for(int i = 0; i < N_MATERIE; i++)
     {
-        if((materie[i]==materia)) {
+        if(voti[i].materia == materia) {
             int indice_colonna = trova_prima_colonna_libera(i);
-            voti[i][indice_colonna] = voto;
+            voti[i].punteggi[indice_colonna] = voto;
         }
     }
 }
@@ -124,7 +128,7 @@ float calcola_media_globale() {
     float media_globale;
     int n_materie;
     for (int i = 0; i < N_MATERIE; i++) {
-        float media_materia = calcola_media(materie[i]);
+        float media_materia = calcola_media(voti[i].materia);
         if (media_materia!=-1) {
             media_globale += media_materia;
             n_materie++;
@@ -140,6 +144,12 @@ void menu_media_totale() {
 
 int main()
 {
+    string materie[N_MATERIE] = {"ita", "mat", "ing", "inf"};
+
+    init_voti(materie);
+
+
+
     char scelta;
     do {
         cout<<"scegli l'operazione da effettuare:"<<endl;
