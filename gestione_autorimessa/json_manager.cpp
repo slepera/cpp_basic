@@ -42,3 +42,7 @@ void genera_json(veicolo veicoli[DIM_MAX], int n_veicoli) {
     }
     scrivi_file("veicoli.json", j.dump(4));
 }
+
+veicolo[] leggi_json(json j) {
+
+}
