@@ -1,6 +1,16 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
+
+double calcola_distanza_2d(double x1, double y1, double x2, double y2) {
+    return sqrt(pow((x2-x1),2) + pow((y2-y1),2));
+}
+
+
+
 int main() {
+
+
     int n1, n2;
     bool mcd_trovato=false;
     cout<<"inserisci due numeri naturali";
