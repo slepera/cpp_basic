@@ -1,14 +1,18 @@
 #include <windows.h>
-#include <stdlib.h>
+#include <ctime>
 #include "enemy.h"
 #include "game.h"
 
 
 void* enemy(void* arg) {
+    srand(time(NULL));
     while (running) {
-        ex--;
-        if (ex <= 1) ex = 20;
+        ey++;
+        if (ey >= 20) {
+            ey = 0;
+            ex = rand()%W;
+        }
         Sleep(200);
     }
-    return NULL;
+    return nullptr;
 }

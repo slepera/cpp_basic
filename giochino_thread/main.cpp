@@ -6,12 +6,7 @@
 #include "player.h"
 #include "draw.h"
 
-const int W = 25;
-const int H = 10;
 
-int px = 1, py = 5;
-int ex = 20, ey = 5;
-int running = 1;
 
 int main() {
     pthread_t tenemy;

@@ -4,16 +4,18 @@
 #include <pthread.h>
 #include "game.h"
 
-
-
 void* draw(void* arg) {
-    system("cls");
-    for (int y = 0; y < H; y++) {
-        for (int x = 0; x < W; x++) {
-            if (x == px && y == py) putchar('@');
-            else if (x == ex && y == ey) putchar('X');
-            else putchar('.');
+    while (running) {
+        system("cls");
+        for (int y = 0; y < H; y++) {
+            for (int x = 0; x < W; x++) {
+                if (x == px && y == py) putchar('@');
+                else if (x == ex && y == ey) putchar('X');
+                else putchar('.');
+            }
+            putchar('\n');
         }
-        putchar('\n');
+        Sleep(200);
     }
+    return nullptr;
 }
