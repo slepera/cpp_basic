@@ -16,7 +16,7 @@ int numero_veicoli_usciti = 0;
 
 
 
-int ultima_posizione = 0;
+int posizione_libera = 0;
 
 veicolo veicoli[DIM_MAX];
 
@@ -36,7 +36,7 @@ void check_out() {
     cout<<"inserisci la targa: ";
     cin>>targa;
     ora_uscita = current_time_hh_mm();
-    for (int i = 0; i < ultima_posizione; i++) {
+    for (int i = 0; i < posizione_libera; i++) {
         if (veicoli[i].targa == targa) {
             ora_ingresso = veicoli[i].ora_ingresso;
             veicoli[i].ora_uscita = ora_uscita;
@@ -86,10 +86,10 @@ void check_in() {
         cin>>targa;
     }while (targa.size()<1);
 
-    veicoli[ultima_posizione].targa = targa;
-    veicoli[ultima_posizione].tipo = tipo_veicolo;
-    veicoli[ultima_posizione].ora_ingresso = current_time_hh_mm();
-    ultima_posizione++;
+    veicoli[posizione_libera].targa = targa;
+    veicoli[posizione_libera].tipo = tipo_veicolo;
+    veicoli[posizione_libera].ora_ingresso = current_time_hh_mm();
+    posizione_libera++;
     numero_veicoli_entrati++;
 }
 
@@ -102,7 +102,7 @@ void stampa_report() {
         system("clear");
     #endif
 
-    for (int i = 0; i < ultima_posizione; i++) {
+    for (int i = 0; i < posizione_libera; i++) {
         if (veicoli[i].costo!=0) {
             incasso_totale += veicoli[i].costo;
         }
@@ -120,8 +120,8 @@ void stampa_report() {
 }
 
 void salva() {
-    genera_json(veicoli, ultima_posizione);
-    genera_csv(veicoli, ultima_posizione);
+    genera_json(veicoli, posizione_libera);
+    genera_csv(veicoli, posizione_libera);
     press_enter_to_continue();
 }
 

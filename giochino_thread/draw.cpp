@@ -11,7 +11,7 @@ void* draw(void* arg) {
             for (int x = 0; x < W; x++) {
                 if (x == px && y == py) putchar('@');
                 else if (x == ex && y == ey) putchar('X');
-                else putchar('.');
+                else putchar(' ');
             }
             putchar('\n');
         }
