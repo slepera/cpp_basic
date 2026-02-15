@@ -3,8 +3,21 @@ using namespace std;
 
 const int N = 30;
 
+// void bubble_sort(float temperature[N]) {
+//     float temp;
+//     for(int i = 0; i < n-1; i++) {
+//         for(int j = 0; j < n-i-1; j++) {
+//             if(temperature[j] > temperature[j+1]) {
+//                 temp = temperature[j];
+//                 temperature[j] = temperature[j+1];
+//                 temperature[j+1] = temp;
+//             }
+//         }
+//     }
+// }
 
 int inserimento_temperature(float temperature[N]) {
+    srand(time(NULL));
     int numero_temperature;
     cout<<"quante temperature vuoi inserire (max. 30) ? ";
     cin>>numero_temperature;
@@ -13,8 +26,7 @@ int inserimento_temperature(float temperature[N]) {
         return -1;
     }
     for (int i = 0; i < numero_temperature; i++) {
-        cout<<"inserisci un dato di temperatura: ";
-        cin>>temperature[i];
+        temperature[i] = rand() % 100 -50;
     }
     return numero_temperature;
 }
@@ -70,6 +82,13 @@ int giorni_sopra_media(float temperature[N], int n_el, float media) {
     return contatore;
 }
 
+void stampa_temperature(float arr[], int num_elem) {
+    for (int i = 0; i<num_elem; i++) {
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+}
+
 int main() {
     float temperature[N];
     float media, min, max;
@@ -79,5 +98,6 @@ int main() {
     min = calcola_min(temperature, numero_temperature);
     max = calcola_max(temperature, numero_temperature);
     g_s_m = giorni_sopra_media(temperature, numero_temperature, media);
+    stampa_temperature(temperature, numero_temperature);
     stampa_risultati(media, min, max, g_s_m);
 }
