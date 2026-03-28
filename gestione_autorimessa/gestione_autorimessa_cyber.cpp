@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <sstream>
 #include <cstdlib>
+#include <vector>
+
 #include "utilities.h"
 #include "constants.h"
 #include "json_manager.h"
@@ -16,14 +18,13 @@ int numero_veicoli_usciti = 0;
 
 
 
-int posizione_libera = 0;
 
-veicolo veicoli[DIM_MAX];
+vector<veicolo> veicoli;
 
 char menu_iniziale();
 void check_in();
 void check_out();
-float costo_sosta(int, char);
+float costo_sosta(int, string);
 void stampa_report();
 void salva();
 
@@ -36,7 +37,7 @@ void check_out() {
     cout<<"inserisci la targa: ";
     cin>>targa;
     ora_uscita = current_time_hh_mm();
-    for (int i = 0; i < posizione_libera; i++) {
+    for (int i = 0; i < veicoli.size(); i++) {
         if (veicoli[i].targa == targa) {
             ora_ingresso = veicoli[i].ora_ingresso;
             veicoli[i].ora_uscita = ora_uscita;
@@ -51,11 +52,16 @@ void check_out() {
 
 int main() {
     char scelta;
+    string s = leggi_file("veicoli.json");
+    if (!s.empty()) {
+        veicoli = leggi_json(s);
+    }
     do {
         scelta = menu_iniziale();
         switch (scelta) {
             case 's':
                 salva();
+                break;
             case 'i':
                 check_in();
                 break;
@@ -86,10 +92,11 @@ void check_in() {
         cin>>targa;
     }while (targa.size()<1);
 
-    veicoli[posizione_libera].targa = targa;
-    veicoli[posizione_libera].tipo = tipo_veicolo;
-    veicoli[posizione_libera].ora_ingresso = current_time_hh_mm();
-    posizione_libera++;
+    veicolo v;
+    v.targa = targa;
+    v.tipo = tipo_veicolo;
+    v.ora_ingresso = current_time_hh_mm();
+    veicoli.push_back(v);
     numero_veicoli_entrati++;
 }
 
@@ -102,7 +109,7 @@ void stampa_report() {
         system("clear");
     #endif
 
-    for (int i = 0; i < posizione_libera; i++) {
+    for (int i = 0; i < veicoli.size(); i++) {
         if (veicoli[i].costo!=0) {
             incasso_totale += veicoli[i].costo;
         }
@@ -120,8 +127,7 @@ void stampa_report() {
 }
 
 void salva() {
-    genera_json(veicoli, posizione_libera);
-    genera_csv(veicoli, posizione_libera);
+    genera_json(veicoli);
     press_enter_to_continue();
 }
 
@@ -146,11 +152,11 @@ char menu_iniziale() {
 }
 
 
-float costo_sosta(int durata_sosta, char tipo_veicolo) {
+float costo_sosta(int durata_sosta, string tipo_veicolo) {
     const float TARIFFA_M=5.0, TARIFFA_A=10.0, TARIFFA_F=15.0;
     float tariffa_applicata;
     float costo_sosta;
-    switch (tipo_veicolo) {
+    switch (tipo_veicolo.at(0)) {
         case 'm':
             tariffa_applicata=TARIFFA_M;
             break;

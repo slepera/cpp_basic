@@ -13,26 +13,33 @@ void scrivi_file(string nome_file, string data) {
         file.close();
     }
 }
-void genera_csv(veicolo veicoli[DIM_MAX], int n_veicoli) {
-    string output;
 
-    for (int i = 0; i < n_veicoli; i++) {
-        output.append(veicoli[i].targa).append(",");
-        output.append(veicoli[i].ora_ingresso).append(",");
-        output.append(veicoli[i].ora_uscita).append(",");
-        output.append(to_string(veicoli[i].costo));
-        output.append("\n");
+string leggi_file(const string nome_file) {
+    if (nome_file.empty()) {
+        cerr << "Filename is empty!\n";
+        return "";
     }
-    scrivi_file("veicoli.csv",output);
+    ifstream file(nome_file);
+    if (!file.is_open()) {
+        cerr << "Cannot open file: " << nome_file << "\n";
+        return "";
+    }
+    string contenuto;
+    string linea;
+    while (std::getline(file, linea)) {
+        contenuto += linea + '\n';
+    }
+    return contenuto;
 }
 
-void genera_json(veicolo veicoli[DIM_MAX], int n_veicoli) {
+
+void genera_json(vector<veicolo> veicoli) {
     json j;
     j["veicoli"] = json::array();
-    for (int i = 0; i < n_veicoli; i++) {
+    for (int i = 0; i < veicoli.size(); i++) {
         j["veicoli"].push_back({
             {"targa", veicoli[i].targa},
-            {"tipo_veicolo", veicoli[i].tipo},
+            {"tipo", veicoli[i].tipo},
             {"ora_ingresso", veicoli[i].ora_ingresso},
             {"ora_uscita", veicoli[i].ora_uscita},
             {"costo", veicoli[i].costo},
@@ -43,6 +50,24 @@ void genera_json(veicolo veicoli[DIM_MAX], int n_veicoli) {
     scrivi_file("veicoli.json", j.dump(4));
 }
 
-veicolo[] leggi_json(json j) {
+void from_json(const json& j, veicolo& v) {
+    j.at("targa").get_to(v.targa);
+    j.at("tipo").get_to(v.tipo);
+    j.at("ora_ingresso").get_to(v.ora_ingresso);
+    j.at("ora_uscita").get_to(v.ora_uscita);
+    j.at("costo").get_to(v.costo);
+}
 
+vector<veicolo> leggi_json(string s) {
+
+    json j = json::parse(s);
+    j = j.at("veicoli");
+
+    vector<veicolo> veicoli;
+    for (int i = 0; i < j.size(); i++) {
+        veicolo v;
+        v = j[i].get<veicolo>();
+        veicoli.push_back(v);
+    }
+    return veicoli;
 }

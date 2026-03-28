@@ -5,7 +5,7 @@ using namespace std;
 #define GESTIONE_AUTORIMESSA_VEICOLO_H
 struct  veicolo {
     string targa;
-    char tipo;
+    string tipo;
     string ora_ingresso;
     string ora_uscita;
     float costo;
